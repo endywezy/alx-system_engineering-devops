@@ -10,7 +10,6 @@ user=$(echo "$line" | awk '{print $1}')
 ppid=$(echo "$line" | awk '{print $3}')
 tty=$(echo "$line" | awk '{print $7}')
 command=$(echo "$line" | awk '{$1=$2=$3=$4=$5=$6=$7=""; print $0}')i
-
 # Display process details
 printf "%-10s %-20s %-10s %-10s %-50s\n" "$pid" "$user" "$ppid" "$tty" "$command"
 done < <(ps aux --forest --no-header)
