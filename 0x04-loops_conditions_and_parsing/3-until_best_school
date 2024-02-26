@@ -5,8 +5,8 @@
 # Counter variable
 counter=0
 
-while [ $counter -lt 10 ]
-do
+# Using an until loop to display "Best School" 10 times
+until [ $counter -eq 10 ]; do
     echo "Best School"
     ((counter++))
 done
