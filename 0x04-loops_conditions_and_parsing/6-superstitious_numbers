@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
 # This script prints "bad luck" 4th iteration, "good luck" on the 8th iteration, and "Holberton School" for other iterations
-n=1
+count=1
 
-while [ $n -le 20 ]
-do
-    echo $n
-    case $n in
+while [ $count -le 20 ]; do
+    case $count in
         4)
-            echo "bad luck from China"
+            echo "4"
+            echo "Bad luck from China"
             ;;
         9)
-            echo "bad luck from Japan"
+            echo "9"
+            echo "Bad luck from Japan"
             ;;
         17)
-            echo "bad luck from Italy"
+            echo "17"
+            echo "Bad luck from Italy"
             ;;
         *)
+            echo $count
             ;;
     esac
-    n=$(( n + 1 ))
+    ((count++))
+done
