@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 # Tells a story based on the contents of the `/etc/passwd` file.
 
-while IFS=: read -r username _ uid gid info home shell; do
-    # Extracting user's full name and passcode
-    full_name=$(grep -E "^${username}:" /etc/passwd | cut -d: -f5 | cut -d, -f1)
-    passcode=$(grep -E "^${username}:" /etc/shadow | cut -d: -f2)
-
-    # Displaying the story
-    echo "The user $username is part of the group $gid gang, lives in $home and rides $shell."
-    echo "User ID's place is protected by the passcode $passcode, more info about the user here: $full_name"
-    echo
-done < /etc/passwd
+while IFS=':' read username password uid gid info home shell; do
+  echo "The user $username is part of the $gid gang,"\
+  "lives in $home and rides $shell."\
+  "$uid's place is protected by the passcode $password,"\
+  "more info about the user here: $info"
+done < "/etc/passwd"
