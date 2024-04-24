@@ -7,4 +7,4 @@ chmod +x *
 chmod -x README.md
 
 # Add all files to git, commit changes, and push to the remote repository
-git add . && git commit -m 'Python MySQL Objects, Scopes and C' && git pus
+git add . && git commit -m 'Web stack debugging' && git push
