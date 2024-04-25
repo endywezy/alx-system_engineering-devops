@@ -1,10 +1,6 @@
-package { 'python3-pip':
-  ensure => installed,
-}
+# installs package puppet-lint
 
-exec { 'install_flask':
-  command => '/usr/bin/pip3 install flask',  # Install latest version
-  unless => '/usr/bin/pip3 show flask',       # Check for any Flask installation
-  require => Package['python3-pip'],
-  onFailure => { loglevel => 'err', message => 'Failed to install Flask' },
+package { 'puppet-lint':
+  ensure   => '2.1.1',
+  provider => 'gem',
 }
