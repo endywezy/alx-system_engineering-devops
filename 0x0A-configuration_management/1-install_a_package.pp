@@ -1,10 +1,11 @@
-# installs package puppet-lint
+# 1-install_a_package.pp
 
-# Install Flask package
-package { 'python3-flask': }  # Replace with the appropriate package name 
+package { 'python3-pip':
+  ensure => installed,
+}
 
-# Check if Flask 2.1.0 is installed (Optional)
-exec { 'check_flask_version':
-  command => '/path/to/flask --version | grep 2.1.0',  # Replace with actual path if needed
-  unless => '/path/to/flask --version | grep 2.1.0',  # Check for expected version
+exec { 'install_flask':
+  command => '/usr/bin/pip3 install flask==2.1.0',
+  unless  => '/usr/bin/pip3 show flask | grep -q "Version: 2.1.0"',
+  require => Package['python3-pip'],
 }
