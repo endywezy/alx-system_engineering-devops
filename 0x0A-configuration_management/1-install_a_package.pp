@@ -8,4 +8,3 @@ exec { 'install_flask':
   require => Package['python3-pip'],
   onFailure => { loglevel => 'err', message => 'Failed to install Flask' },
 }
-
