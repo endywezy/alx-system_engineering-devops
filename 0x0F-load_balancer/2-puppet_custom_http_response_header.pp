@@ -1,8 +1,40 @@
-# File: 2-puppet_custom_http_response_header.pp
+# Install Nginx package
+package { 'nginx':
+  ensure => installed,
+}
 
-exec { 'configure_custom_http_header':
-  command  => 'apt-get -y update; \
-               apt-get -y install nginx; \
-               sed -i "/listen 80 default_server;/a add_header X-Served-By ${hostname};" /etc/nginx/sites-available/default; \
-               service nginx restart',
-  provider => shell,
+# Define custom HTTP header configuration
+file { '/etc/nginx/sites-available/default':
+  ensure  => file,
+  content => "
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+
+        add_header X-Served-By $hostname;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+    }
+  ",
+}
+
+# Enable the default site
+file { '/etc/nginx/sites-enabled/default':
+  ensure => link,
+  target => '/etc/nginx/sites-available/default',
+  require => File['/etc/nginx/sites-available/default'],
+  notify => Service['nginx'],
+}
+
+# Restart Nginx service after configuration changes
+service { 'nginx':
+  ensure    => running,
+  enable    => true,
+  subscribe => File['/etc/nginx/sites-available/default'],
+}
