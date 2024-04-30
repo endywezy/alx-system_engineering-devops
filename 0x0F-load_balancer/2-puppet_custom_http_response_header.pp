@@ -1,4 +1,4 @@
-#!/usr/bin/env puppet
+#!/usr/bin/env bash
 # Puppet manifest to add a custom HTTP header
 
 # Define a class for Nginx configuration with custom header
