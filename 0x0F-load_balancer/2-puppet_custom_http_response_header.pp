@@ -7,6 +7,3 @@ exec { 'configure_custom_http_header':
                sed -i "/listen 80 default_server;/a add_header X-Served-By ${hostname};" /etc/nginx/sites-available/default; \
                service nginx restart',
   provider => shell,
-  path     => '/usr/bin:/bin', # Set proper PATH to avoid potential issues
-  require  => Package['nginx'], # Ensure Nginx is installed before executing this command
-}
