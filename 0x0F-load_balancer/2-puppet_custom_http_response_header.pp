@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # File: 2-puppet_custom_http_response_header.pp
 
 exec { 'configure_custom_http_header':
