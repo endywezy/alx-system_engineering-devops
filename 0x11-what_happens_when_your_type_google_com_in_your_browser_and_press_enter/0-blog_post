@@ -1,0 +1,40 @@
+Behind the Scenes: What Happens When You Enter "https://www.google.com"
+Ever typed "https://www.google.com" into your browser and instantly landed on the search engine's homepage? It might seem like magic, but there's a fascinating sequence of events happening behind the scenes. Let's delve into the journey your request takes, from the moment you press Enter to seeing the familiar Google logo.
+
+The Address Book: DNS Request
+
+Imagine you have a friend named Google living on a street full of websites. Typing "https://www.google.com" is like looking up their address in your phone's contact list. Your computer sends a DNS request (Domain Name System) to a DNS server, which acts like a giant internet phonebook. The DNS server translates " https://www.google.com" into a numerical IP address, the actual location of Google's server on the internet.
+
+The Information Highway: TCP/IP
+
+With the IP address in hand, your computer now knows where to find Google. It uses a communication protocol called TCP/IP (Transmission Control Protocol/Internet Protocol) to establish a connection. Think of TCP/IP as the set of rules that governs how data travels over the internet, like traffic signals on a highway.
+
+The Security Guard: Firewall
+
+Before letting any data in or out, your computer's firewall acts as a security guard. It checks the incoming data packets (pieces of information) from Google to ensure they're safe and authorized. Firewalls help keep your computer protected from malicious attacks.
+
+Encryption Please: HTTPS/SSL
+
+Now that the connection is secure, the communication gets encrypted. This is where HTTPS (Hypertext Transfer Protocol Secure) and SSL (Secure Sockets Layer) come in. Imagine encrypting your messages with a secret code before sending them. HTTPS scrambles the data exchanged between your computer and Google, making it unreadable to anyone eavesdropping on the conversation.
+
+Load Balancing the Traffic: Load Balancer
+
+Google likely has multiple servers handling website traffic. A load balancer acts like a traffic director, distributing incoming requests from users like yourself across these servers. This ensures smooth operation and prevents any single server from getting overloaded.
+
+Serving Up the Content: Web Server
+
+Finally, we reach Google's server itself. The web server receives your request and retrieves the necessary files to display the Google homepage. This includes HTML code, images, and other resources that make up the webpage you see.
+
+Behind the Scenes: Application Server (Optional)
+
+In some cases, websites might rely on an application server to handle more complex tasks. This server might interact with a database or perform calculations before delivering the final content to the web server.
+
+The Knowledge Vault: Database (Optional)
+
+If you were searching for something specific on Google, a database might come into play. This is a giant storage system where Google keeps information like search results, user profiles, and other data. The application server might query the database to retrieve the most relevant results for your search.
+
+The Final Display: Your Browser
+
+Once the web server delivers the requested files, your browser takes over. It interprets the HTML code, fetches images, and displays the complete webpage on your screen. Voila! You've landed on the Google homepage, ready to embark on your internet adventure.
+
+This is a simplified explanation, but it hopefully gives you a glimpse into the complex dance that happens every time you enter a website address. The next time you use Google, remember the incredible network of technologies working tirelessly behind the scenes to bring you the information you seek.
