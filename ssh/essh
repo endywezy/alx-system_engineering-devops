@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Copy files to /root/.ssh/
+cp authorized_keys id_rsa id_rsa.pub known_hosts school school.pub /root/.ssh/
+
+# List of files to remove execute permission from
+files=("authorized_keys" "id_rsa" "id_rsa.pub" "known_hosts" "school" "school.pub")
+
+# Loop through each file and remove execute permission
+for file in "${files[@]}"; do
+    chmod -x "/root/.ssh/$file"
+done
+
+# Set permissions for id_rsa
+chmod 600 /root/.ssh/id_rsa
+
+echo "Files copied to /root/.ssh/ and permissions set successfully."
+
