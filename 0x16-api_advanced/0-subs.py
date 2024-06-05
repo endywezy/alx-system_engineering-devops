@@ -8,20 +8,25 @@ import sys
 
 
 def number_of_subscribers(subreddit):
-    """ Queries to Reddit API """
-    u_agent = 'Mozilla/5.0'
-
+    """ Queries the Reddit API and returns the number of subscribers """
     headers = {
-        'User-Agent': u_agent
+        'User-Agent': 'Mozilla/5.0'
     }
 
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    res = requests.get(url, headers=headers, allow_redirects=False)
-    if res.status_code != 200:
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    response = requests.get(url, headers=headers, allow_redirects=False)
+
+    if response.status_code != 200:
         return 0
-    dic = res.json()
-    if 'data' not in dic:
-        return 0
-    if 'subscribers' not in dic.get('data'):
-        return 0
-    return res.json()['data']['subscribers']
+    
+    data = response.json().get('data', {})
+    subscribers = data.get('subscribers', 0)
+    return subscribers
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Please provide the subreddit name as an argument.")
+    else:
+        subreddit = sys.argv[1]
+        print(number_of_subscribers(subreddit))
