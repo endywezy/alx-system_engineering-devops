@@ -1,53 +1,35 @@
 #!/usr/bin/python3
 """
-Function that queries the Reddit API and prints
-the top ten hot posts of a subreddit
+Module to fetch top ten posts from a subreddit using the Reddit API.
 """
+
 import requests
-import sys
 
 
 def top_ten(subreddit):
-    """ Queries to Reddit API """
-    u_agent = 'Chrome/106.0'
+    """
+    Fetches and prints the top ten posts from the specified subreddit.
 
-    headers = {
-        'User-Agent': u_agent
-    }
+    Args:
+        subreddit (str): The name of the subreddit to fetch posts from.
+    """
+    url = (
+        "https://www.reddit.com/r/" +
+        subreddit +
+        "/hot.json?limit=10"
+    )
+    headers = {"User-Agent": "MyAPIAgent"}
 
-    params = {
-        'limit': 10
-    }
+    response = requests.get(url, headers=headers)
 
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    res = requests.get(url,
-                       headers=headers,
-                       params=params,
-                       allow_redirects=False)
-    try:
-        res.raise_for_status()  # Raise an exception for HTTP errors
-        dic = res.json()
-        hot_posts = dic['data']['children']
-
-        if not hot_posts:
-            print("No hot posts found in subreddit: {}".format(subreddit))
-            return
-
-        for post in hot_posts:
-            print(post['data']['title'])
-
-    except requests.HTTPError as e:
-        print("Error: HTTP request failed:", e)
-
-    except requests.exceptions.RequestException as e:
-        print("Error: Request failed:", e)
-
-    except ValueError:
-        print("Error: Invalid JSON format in response")
+    if response.status_code == 200:
+        data = response.json()
+        if 'data' in data and 'children' in data['data']:
+            for post in data['data']['children']:
+                print(post['data']['title'])
+    else:
+        print(None)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Please pass an argument for the subreddit to search.")
-    else:
-        top_ten(sys.argv[1])
+    top_ten("programming") 
