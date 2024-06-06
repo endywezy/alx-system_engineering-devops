@@ -9,7 +9,7 @@ import sys
 
 def top_ten(subreddit):
     """ Queries to Reddit API """
-    u_agent = 'Mozilla/5.0'
+    u_agent = 'Chrome/106.0'
 
     headers = {
         'User-Agent': u_agent
