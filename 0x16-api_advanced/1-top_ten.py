@@ -1,35 +1,36 @@
 #!/usr/bin/python3
 """
-Module to fetch top ten posts from a subreddit using the Reddit API.
+Function that queries the Reddit API and prints
+the top ten hot posts of a subreddit
 """
-
 import requests
+import sys
 
 
 def top_ten(subreddit):
-    """
-    Fetches and prints the top ten posts from the specified subreddit.
+    """ Queries to Reddit API """
+    u_agent = 'Chrome/106.0'
 
-    Args:
-        subreddit (str): The name of the subreddit to fetch posts from.
-    """
-    url = (
-        "https://www.reddit.com/r/" +
-        subreddit +
-        "/hot.json?limit=10"
-    )
-    headers = {"User-Agent": "MyAPIAgent"}
+    headers = {
+        'User-Agent': u_agent
+    }
 
-    response = requests.get(url, headers=headers)
+    params = {
+        'limit': 10
+    }
 
-    if response.status_code == 200:
-        data = response.json()
-        if 'data' in data and 'children' in data['data']:
-            for post in data['data']['children']:
-                print(post['data']['title'])
-    else:
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    res = requests.get(url,
+                       headers=headers,
+                       params=params,
+                       allow_redirects=False)
+    if res.status_code != 200:
         print(None)
-
-
-if __name__ == "__main__":
-    top_ten("programming") 
+        return
+    dic = res.json()
+    hot_posts = dic['data']['children']
+    if len(hot_posts) is 0:
+        print(None)
+    else:
+        for post in hot_posts:
+            print(post['data']['title'])
