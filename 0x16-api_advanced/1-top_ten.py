@@ -28,11 +28,11 @@ def top_ten(subreddit):
         'limit': 10
     }
 
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)  # Modified URL formatting
     response = requests.get(url, headers=headers, params=params, allow_redirects=False)
 
     if response.status_code != 200:
-        print(f"Error: Could not retrieve data. Status code: {response.status_code}")
+        print("Error: Could not retrieve data. Status code: {}".format(response.status_code))
         return
 
     try:
@@ -42,7 +42,7 @@ def top_ten(subreddit):
         return
 
     if not data:
-        print(f"No hot posts found in subreddit: {subreddit}")
+        print("No hot posts found in subreddit: {}".format(subreddit))
         return
 
     for post in data:
@@ -51,7 +51,7 @@ def top_ten(subreddit):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: ./10-top_ten.py <subreddit>")
+        print("Usage: ./1-main.py <subreddit>")
         sys.exit(1)
 
     subreddit = sys.argv[1]
