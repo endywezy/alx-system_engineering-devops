@@ -1,58 +1,53 @@
 #!/usr/bin/python3
-
 """
 Function that queries the Reddit API and prints
 the top ten hot posts of a subreddit
 """
-
 import requests
 import sys
 
 
 def top_ten(subreddit):
-    """
-    Queries the Reddit API for the top ten hot posts of a subreddit
-    Args:
-        subreddit (str): The name of the subreddit to query
-
-    Returns:
-        None
-    """
-    user_agent = 'Mozilla/5.0'  # Updated user agent
+    """ Queries to Reddit API """
+    u_agent = 'Chrome/106.0'
 
     headers = {
-        'User-Agent': user_agent
+        'User-Agent': u_agent
     }
 
     params = {
         'limit': 10
     }
 
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)  # Modified URL formatting
-    response = requests.get(url, headers=headers, params=params, allow_redirects=False)
-
-    if response.status_code != 200:
-        print("Error: Could not retrieve data. Status code: {}".format(response.status_code))
-        return
-
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    res = requests.get(url,
+                       headers=headers,
+                       params=params,
+                       allow_redirects=False)
     try:
-        data = response.json().get('data', {}).get('children', [])
+        res.raise_for_status()  # Raise an exception for HTTP errors
+        dic = res.json()
+        hot_posts = dic['data']['children']
+
+        if not hot_posts:
+            print("No hot posts found in subreddit: {}".format(subreddit))
+            return
+
+        for post in hot_posts:
+            print(post['data']['title'])
+
+    except requests.HTTPError as e:
+        print("Error: HTTP request failed:", e)
+
+    except requests.exceptions.RequestException as e:
+        print("Error: Request failed:", e)
+
     except ValueError:
         print("Error: Invalid JSON format in response")
-        return
-
-    if not data:
-        print("No hot posts found in subreddit: {}".format(subreddit))
-        return
-
-    for post in data:
-        print(post['data']['title'])
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: ./1-main.py <subreddit>")
-        sys.exit(1)
-
-    subreddit = sys.argv[1]
-    top_ten(subreddit)
+        print("Please pass an argument for the subreddit to search.")
+    else:
+        top_ten(sys.argv[1])
